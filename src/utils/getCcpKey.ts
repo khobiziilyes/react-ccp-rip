@@ -1,7 +1,6 @@
+import { ALGO_START } from "../consts";
 // This function is responsible for generating the CCP key, from the CCP number.
 // You can find more information about the algorithm here: https://www.youtube.com/watch?v=T7gkesAV90c
-
-const ALGO_START = 4;
 
 export default function getCcpKey(ccp: string): string {
 	const chars = ccp.split("").reverse();

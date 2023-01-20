@@ -2,11 +2,11 @@ import {
 	MantineProvider,
 	ColorSchemeProvider,
 	ColorScheme,
-	Text,
 } from "@mantine/core";
 import { useColorScheme, useLocalStorage } from "@mantine/hooks";
 
 import Layout from "./components/Layout";
+import Main from "./components/Main";
 
 export default function App() {
 	const preferredColorScheme = useColorScheme();
@@ -31,7 +31,7 @@ export default function App() {
 				withNormalizeCSS
 			>
 				<Layout>
-					<Text>Content</Text>
+					<Main />
 				</Layout>
 			</MantineProvider>
 		</ColorSchemeProvider>

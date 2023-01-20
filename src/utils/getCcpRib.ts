@@ -8,3 +8,15 @@ export default function getCcpRib(ccp: string): string {
 
 	return rib;
 }
+
+export function formatCcpRib(rib: string): string {
+	const breakpoints = [3, 8, 18];
+
+	return [...rib]
+		.map((_, i) => (breakpoints.includes(i) ? " " : "") + _)
+		.join("");
+}
+
+export function getFormattedCcpRib(ccp: string): string {
+	return formatCcpRib(getCcpRib(ccp));
+}

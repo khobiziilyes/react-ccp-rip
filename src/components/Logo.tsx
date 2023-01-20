@@ -14,7 +14,7 @@ export default function Logo({ colorScheme }: { colorScheme: ColorScheme }) {
 				cy="50"
 				r="100"
 				stroke="black"
-				stroke-width="3"
+				strokeWidth="3"
 				fill={colorScheme === "dark" ? "#fff" : "#000"}
 			/>
 		</svg>

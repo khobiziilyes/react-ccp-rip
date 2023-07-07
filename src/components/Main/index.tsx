@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { useLocalStorage } from "@mantine/hooks";
+import { useState, useMemo } from "react";
+import { useLocalStorage, useDisclosure } from "@mantine/hooks";
 import {
 	SimpleGrid,
 	TextInput,
@@ -7,6 +7,7 @@ import {
 	CopyButton,
 	Button,
 	Group,
+	Modal,
 	ActionIcon,
 	Text,
 	Card,
@@ -36,36 +37,69 @@ export default function Main() {
 	const ccpRip = ccpMemo(getCcpRip);
 	const ccpRib = ccpMemo(getCcpRib);
 
+	const [modalNameText, setModalNameText] = useState("");
+	const [isSaveModalOpen, { open: openSaveModal, close: closeSaveModal }] =
+		useDisclosure(false);
+
+	const [ccpDict, setCcpDict] = useLocalStorage({
+		key: "ccp-dict",
+		defaultValue: {},
+	});
+
+	const handleModalSave = () => {
+		setCcpDict({ ...ccpDict, [_ccp]: modalNameText });
+
+		setModalNameText("");
+		closeSaveModal();
+	};
+
 	return (
-		<SimpleGrid
-			cols={2}
-			breakpoints={[
-				{ maxWidth: 980, cols: 1, spacing: "md" },
-				{ maxWidth: 800, cols: 1, spacing: "sm" },
-			]}
-		>
-			<Stack>
-				<CCPInput ccp={_ccp} setCcp={setCcp} />
-
-				<SimpleGrid cols={2}>
-					<CopyableResult label="CCP" value={ccp} Ticon={IconHash} />
-					<CopyableResult label="Clé" value={ccpKey} Ticon={IconKey} />
-					<CopyableResult label="RIP" value={ccpRip} Ticon={IconNotebook} />
-					<CopyableResult
-						label="RIB"
-						value={ccpRib}
-						Ticon={IconBuildingBank}
-						formattedValue={formatCcpRib(ccpRib)}
+		<>
+			<Modal opened={isSaveModalOpen} onClose={close} title="Save">
+				<Stack>
+					<TextInput
+						value={modalNameText}
+						onChange={e => setModalNameText(e.currentTarget.value)}
+						label="Nom"
+						placeholder="Nom"
 					/>
-				</SimpleGrid>
 
-				<Button color="cyan" size="lg">
-					Save
-				</Button>
-			</Stack>
+					<Button color="cyan" size="sm" onClick={handleModalSave}>
+						Save
+					</Button>
+				</Stack>
+			</Modal>
 
-			<Stack></Stack>
-		</SimpleGrid>
+			<SimpleGrid
+				cols={2}
+				breakpoints={[
+					{ maxWidth: 980, cols: 1, spacing: "md" },
+					{ maxWidth: 800, cols: 1, spacing: "sm" },
+				]}
+			>
+				<Stack>
+					<CCPInput ccp={_ccp} setCcp={setCcp} />
+
+					<SimpleGrid cols={2}>
+						<CopyableResult label="CCP" value={ccp} Ticon={IconHash} />
+						<CopyableResult label="Clé" value={ccpKey} Ticon={IconKey} />
+						<CopyableResult label="RIP" value={ccpRip} Ticon={IconNotebook} />
+						<CopyableResult
+							label="RIB"
+							value={ccpRib}
+							Ticon={IconBuildingBank}
+							formattedValue={formatCcpRib(ccpRib)}
+						/>
+					</SimpleGrid>
+
+					<Button color="cyan" size="lg" onClick={openSaveModal}>
+						Save
+					</Button>
+				</Stack>
+
+				<Stack></Stack>
+			</SimpleGrid>
+		</>
 	);
 }
 

@@ -32,9 +32,7 @@ export default function _Header({
 				/>
 			</MediaQuery>
 
-			<Group sx={{ height: "100%" }} px={20} position="apart">
-				<Logo colorScheme={colorScheme} />
-
+			<Group sx={{ height: "100%" }} px={20} position="right">
 				<ActionIcon
 					variant="default"
 					onClick={() => toggleColorScheme()}

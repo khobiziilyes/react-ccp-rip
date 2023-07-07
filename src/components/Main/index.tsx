@@ -77,7 +77,7 @@ function CCPInput({ ccp, setCcp }: { ccp: string; setCcp: any }) {
 	return (
 		<TextInput
 			icon={<IconHash />}
-			description="Saisissez le numéro de compte bancaire, les zeros sont optionnels."
+			description="Saisissez le numéro d'un compte bancaire, les zeros sont optionnels."
 			placeholder="1 2 3 4 5 6"
 			label="CCP"
 			size="xl"
